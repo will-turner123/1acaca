@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  setRead,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -77,6 +78,31 @@ export const fetchConversations = () => async (dispatch) => {
     console.error(error);
   }
 };
+
+const saveRead = async (id) => {
+  let postData = {"conversationId": id};
+  const { data } = await axios.post("/api/messages/read", postData);
+  return data;
+}
+
+const sendRead = (data) => {
+  socket.emit("read-message", {
+    conversationId: data.conversationId,
+  });
+};
+
+// marks messages not sent by user in a conversation as read
+export const readConversation = (conversation) => async (dispatch) => {
+  try{
+    const data = await saveRead(conversation.id);
+
+    dispatch(setRead(data.conversationId));
+    sendRead(data);
+  }
+  catch(error) {
+    console.error(error);
+  }
+}
 
 const saveMessage = async (body) => {
   const { data } = await axios.post("/api/messages", body);
