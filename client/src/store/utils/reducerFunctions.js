@@ -30,7 +30,6 @@ export const addMessageToStore = (state, payload) => {
 
 export const updateConversationReadFromStore = (state, id) => {
   const conversationId = id;
-  console.log(state)
   return state.map((convo) => {
       if (convo.id === conversationId) {
         const convoCopy = {...convo};
