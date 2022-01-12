@@ -47,4 +47,5 @@ class Messages(APIView):
             message_json = message.to_dict()
             return JsonResponse({"message": message_json, "sender": sender})
         except Exception as e:
+            print(e)
             return HttpResponse(status=500)
