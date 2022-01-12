@@ -13,12 +13,22 @@ export const addMessageToStore = (state, payload) => {
 
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
+      const convoCopy = {...convo, messages: [ ...convo.messages]};
+      convoCopy.messages.push(message);
+      convoCopy.latestMessageText = message.text;
+      return convoCopy;
     } else {
       return convo;
     }
+  }) // sorts conversations by the date of their most recent message
+  //  don't reuse this pattern inaccurately, map returns a new object 
+  //  so sort doesn't directly mutate state
+  .sort((a, b) => { 
+    let dateA = new Date(a.messages[a.messages.length - 1].createdAt)
+    let dateB = new Date(b.messages[b.messages.length - 1].createdAt)
+    if (dateA > dateB) return -1;
+    if (dateA < dateB) return 1;
+    return 0;
   });
 };
 
@@ -69,10 +79,11 @@ export const addSearchedUsersToStore = (state, users) => {
 export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
-      convo.id = message.conversationId;
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
+      const convoCopy = { ...convo, messages: [ ...convo.messages] };
+      convoCopy.id = message.conversationId;
+      convoCopy.messages.push(message);
+      convoCopy.latestMessageText = message.text;
+      return convoCopy;
     } else {
       return convo;
     }
