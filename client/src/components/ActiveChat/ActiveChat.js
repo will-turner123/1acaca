@@ -49,7 +49,7 @@ const ActiveChat = (props) => {
       }
     }
 
-  }, [conversation])
+  })
 
   return (
     <Box className={classes.root}>

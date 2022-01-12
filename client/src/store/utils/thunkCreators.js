@@ -81,7 +81,7 @@ export const fetchConversations = () => async (dispatch) => {
 
 const saveRead = async (id) => {
   let postData = {"conversationId": id};
-  const { data } = await axios.post("/api/messages/read", postData);
+  const { data } = await axios.patch("/api/messages/read", postData);
   return data;
 }
 

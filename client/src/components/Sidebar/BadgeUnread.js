@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -20,8 +20,7 @@ const UnreadBadge = (props) => {
     overlap="circle"
     badgeContent={unreadCount}
     max={99}
-    >
-    </Badge>
+    />
   );
 };
 
