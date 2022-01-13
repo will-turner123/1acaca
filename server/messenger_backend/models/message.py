@@ -1,7 +1,8 @@
 from django.db import models
 
 from . import utils
-from .conversation import Conversation, Member
+from .conversation import Conversation
+from .member import Member
 
 
 class Message(utils.CustomModel):
@@ -18,7 +19,6 @@ class Message(utils.CustomModel):
     updatedAt = models.DateTimeField(auto_now=True)
     read_by = models.ManyToManyField(
         Member,
-        on_delete=models.CASCADE,
         related_name="readers",
         related_query_name="reader"
         )
