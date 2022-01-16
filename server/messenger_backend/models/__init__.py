@@ -1,4 +1,4 @@
 from .user import User
 from .conversation import Conversation
 from .message import Message
-from .member import Member
+from .conversationuser import ConversationUser
