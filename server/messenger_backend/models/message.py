@@ -2,6 +2,7 @@ from django.db import models
 
 from . import utils
 from .conversation import Conversation
+from .conversationuser import ConversationUser
 
 
 class Message(utils.CustomModel):
@@ -16,4 +17,8 @@ class Message(utils.CustomModel):
     )
     createdAt = models.DateTimeField(auto_now_add=True, db_index=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    read = models.BooleanField(default=False)
+    read_by = models.ManyToManyField(
+        ConversationUser,
+        related_name="read_messages",
+        related_query_name="readers"
+        )
